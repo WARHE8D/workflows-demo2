@@ -15,4 +15,4 @@ jobs:
         with:
           num1: 8
           num2: 9
-      - run: echo ${{ steps.compositeActions.outputs.result }} #here the .result is the output name from actions.yml output
+      - run: echo ${{ steps.compositeActions.outputs.sum }} #here the .sum is the output name from actions.yml output
