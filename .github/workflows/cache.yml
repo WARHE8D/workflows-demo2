@@ -1,0 +1,27 @@
+name: cache
+
+
+on:
+  workflow_dispatch: 
+
+jobs:
+  cache:
+    name: cache
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6.0.2
+      - name: download-requirements
+        id: download-requirements
+        uses: actions/cache@v5
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+            
+      - run: pip install -r requirements.txt
+      
+      - name: check-cache-hit
+        if: steps.download-requirements.outputs.cache-hit == 'true'
+        run: echo cache hit! skipping pip install...
+        
