@@ -14,7 +14,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: my-artifact
-          path: /world.txt
+          path: world.txt
 
   download-artifact:
     name: download-artifact
@@ -27,3 +27,15 @@ jobs:
     - name: Display structure of downloaded files
       run: ls -R
     - run: cat world.txt
+
+  save-artifact-in-repo:
+    name: Commit world.txt
+    needs: download-artifact
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+              git config user.name "github-actions"
+              git config user.email "github-actions@github.com"
+              git add world.txt
+              git commit -m "Add world.txt from artifact" || echo "No changes"
+              git push
