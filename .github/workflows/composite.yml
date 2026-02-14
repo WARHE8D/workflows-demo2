@@ -1,0 +1,18 @@
+name: composite
+
+on:
+  push:
+    branches: composite
+
+jobs:
+  composite-actions:
+    name: job to test addition operation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6.0.2
+      - uses: ./  #goes to root dir where actions.yml is present
+        id: compositeActions
+        with:
+          num1: 8
+          num2: 9
+      - run: echo ${{ steps.compositeActions.outputs.result }} #here the .result is the output name from actions.yml output
