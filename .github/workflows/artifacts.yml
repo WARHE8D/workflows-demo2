@@ -26,17 +26,11 @@ jobs:
         name: my-artifact
     - name: Display structure of downloaded files
       run: ls -R
-    - run: cat world.txt
 
-  save-artifact-in-repo:
-    name: Commit world.txt
-    needs: download-artifact
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - run: |
-              git config user.name "warhe8d"
-              git config user.email "59991459+WARHE8D@users.noreply.github.com"
-              git add world.txt
-              git commit -m "Add world.txt from artifact" || echo "No changes"
-              git push
+      #save artifact in repo
+    - run: |
+          git config user.name "warhe8d"
+          git config user.email "59991459+WARHE8D@users.noreply.github.com"
+          git add world.txt
+          git commit -m "Add world.txt from artifact" || echo "No changes to commit"
+          git push
