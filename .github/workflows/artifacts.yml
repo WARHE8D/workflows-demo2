@@ -28,6 +28,7 @@ jobs:
       run: ls -R
 
       #save artifact in repo
+    - uses: actions/checkout@v4
     - run: |
           git config user.name "warhe8d"
           git config user.email "59991459+WARHE8D@users.noreply.github.com"
