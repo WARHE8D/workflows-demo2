@@ -36,12 +36,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-          if git diff --quiet world.txt; then
-            echo "No changes detected"
-            exit 0
-          fi
-
           git add world.txt
           git commit -m "Add world.txt from artifact [skip ci]"
           git push
