@@ -2,7 +2,8 @@ name: cache
 
 
 on:
-  workflow_dispatch: 
+  push:
+    branches: cache
 
 jobs:
   cache:
