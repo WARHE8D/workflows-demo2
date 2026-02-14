@@ -23,7 +23,7 @@ runs:
     - shell: bash
       id: sum-result
       run: |
-          num1= ${{ inputs.num1 }}
-          num2= ${{ inputs.num2 }}
+          num1=${{ inputs.num1 }}
+          num2=${{ inputs.num2 }}
           result=$((num1+num2))
           echo "result=$result" >> "$GITHUB_OUTPUT"
