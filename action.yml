@@ -25,5 +25,5 @@ runs:
       run: |
           num1= ${{ inputs.num1 }}
           num2= ${{ inputs.num2 }}
-          result: $((num1+num2))
+          result=$((num1+num2))
           echo "result=$result" >> "$GITHUB_OUTPUT"
