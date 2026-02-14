@@ -1,15 +1,16 @@
 name: artifacts
 
-on: 
+on:
   push:
     branches: main
 
+permissions:
+  contents: write   # required for pushing
+
 jobs:
   upload-artifact:
-    name: upload-artifact
     runs-on: ubuntu-latest
     steps:
-      - run: docker info > world.txt
       - run: echo hello > world.txt
       - uses: actions/upload-artifact@v4
         with:
@@ -17,22 +18,30 @@ jobs:
           path: world.txt
 
   download-artifact:
-    name: download-artifact
     needs: upload-artifact
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/download-artifact@v5
-      with:
-        name: my-artifact
-        path: . #this saves in root
-    - name: Display structure of downloaded files
-      run: ls -R
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
 
-      #save artifact in repo
-    - uses: actions/checkout@v4
-    - run: |
-          git config user.name "warhe8d"
-          git config user.email "59991459+WARHE8D@users.noreply.github.com"
+      - uses: actions/download-artifact@v5
+        with:
+          name: my-artifact
+          path: artifact
+
+      - run: mv artifact/world.txt world.txt
+
+      - name: Commit if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          if git diff --quiet world.txt; then
+            echo "No changes detected"
+            exit 0
+          fi
+
           git add world.txt
-          git commit -m "Add world.txt from artifact" || echo "No changes to commit"
+          git commit -m "Add world.txt from artifact [skip ci]"
           git push
